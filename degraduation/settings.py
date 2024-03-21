@@ -23,11 +23,10 @@ SECRET_KEY = "django-insecure-rl(jhof)&7m#9a80-!a2c%8ut3r9-_j1ti@*lsk2xm1_x#q5-o
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-
+# 允许的域名
 ALLOWED_HOSTS = []
 
-# Application definition
-
+# 注册应用
 INSTALLED_APPS = [
     "django.contrib.admin",
     "django.contrib.auth",
@@ -35,8 +34,9 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "apps.consumer"
 ]
-
+# 中间件
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
@@ -48,7 +48,7 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = "degraduation.urls"
-
+# 模板
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
@@ -69,7 +69,7 @@ WSGI_APPLICATION = "degraduation.wsgi.application"
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
-
+# 数据库
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.mysql",
@@ -101,14 +101,16 @@ AUTH_PASSWORD_VALIDATORS = [
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
-
+# 中文
 LANGUAGE_CODE = "zh-Hans"
-
+# 时区
 TIME_ZONE = "Asia/shanghai"
 
 USE_I18N = True
 
 USE_TZ = True
+
+AUTH_USER_MODEL = 'consumer.Consumer'
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
@@ -137,9 +139,9 @@ CACHES = {
         }
     }
 }
-
+# session匹配到redis
 SESSION_ENGINE = "django.contrib.sessions.backends.cache"
-SESSION_CACHE_ALIAS = "session"
+SESSION_CACHE_ALIAS = "session"  # 使用session配置
 
 LOGGING = {
     'version': 1,
