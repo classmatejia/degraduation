@@ -1,18 +1,20 @@
 from django.http import HttpResponse, JsonResponse
 from django.views import View
 import json
-
-from django_redis import get_redis_connection
-
 from apps.consumer.models import Consumer
-from libs.captcha.captcha import captcha
 
 
 # Create your views here.
 class RegisterView(View):
+    """注册页面"""
 
     def get(self, request):
+        """get请求返回页面"""
         return HttpResponse('register')
+
+    def post(self, request):
+        """post请求传递数据创建用户"""
+        pass
 
 
 class ConsumerCounter(View):
@@ -28,5 +30,3 @@ class LoginView(View):
 
     def get(self, request):
         return HttpResponse('login')
-
-

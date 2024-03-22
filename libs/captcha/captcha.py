@@ -37,7 +37,7 @@ class Bezier:
 
     def make_bezier(self, n):
         """ Bezier curves:
-            http://en.wikipedia.org/wiki/B%C3%A9zier_curve#Generalization
+            https://en.wikipedia.org/wiki/B%C3%A9zier_curve#Generalization
         """
         try:
             return self.beziers[n]
@@ -213,6 +213,7 @@ class Captcha(object):
     def generate_captcha(self):
         self.initialize()
         return self.captcha("")
+
 
 captcha = Captcha.instance()
 

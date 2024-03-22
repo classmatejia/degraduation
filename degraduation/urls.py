@@ -6,7 +6,7 @@ The `urlpatterns` list routes URLs to views. For more information please see:
 Examples:
 Function views
     1. Add an import:  from my_app import views
-    2. Add a URL to urlpatterns:  path('', views.home, name='home')
+    2. Add a URL to urlpatterns:  path('', views. Home, name='home')
 Class-based views
     1. Add an import:  from other_app.views import Home
     2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')
@@ -15,8 +15,18 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include, register_converter
+from utils.converters import *
+
+
+# 注册转换器
+register_converter(UUIDConverter, 'uuid')
+register_converter(ConsumerConverter, 'username')
+
 
 urlpatterns = [
     path("admin/", admin.site.urls),
+    path("captcha/", include("apps.verifications.urls")),
+    path("", include("apps.consumer.urls")),
+
 ]

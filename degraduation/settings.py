@@ -24,7 +24,7 @@ SECRET_KEY = "django-insecure-rl(jhof)&7m#9a80-!a2c%8ut3r9-_j1ti@*lsk2xm1_x#q5-o
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 # 允许的域名
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 # 注册应用
 INSTALLED_APPS = [
@@ -34,14 +34,17 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "apps.consumer"
+    'corsheaders',
+    "apps.consumer",
+    "apps.verifications"
 ]
 # 中间件
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
+    "corsheaders.middleware.CorsMiddleware",
     "django.middleware.common.CommonMiddleware",
-    "django.middleware.csrf.CsrfViewMiddleware",
+    # "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
@@ -137,7 +140,14 @@ CACHES = {
         "OPTIONS": {
             "CLIENT_CLASS": "django_redis.client.DefaultClient",
         }
-    }
+    },
+    "code": {  # 验证码
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": "redis://127.0.0.1:6379/2",
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+        }
+    },
 }
 # session匹配到redis
 SESSION_ENGINE = "django.contrib.sessions.backends.cache"
@@ -183,3 +193,10 @@ LOGGING = {
         },
     }
 }
+# CORS
+CORS_ORIGIN_WHITELIST = (
+    'https://example.com',
+    'http://localhost:8000',
+    'http://localhost:63343'
+)
+CORS_ALLOW_CREDENTIALS = True  # 允许携带cookie
