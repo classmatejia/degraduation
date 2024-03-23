@@ -1,0 +1,57 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background-image: url('../img/regbgimg.jpg'); /* 更改为你的背景图片路径 */
+    background-size: cover;
+    background-position: center;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.form-container {
+    background-color: rgba(255, 255, 255, 0.8); /* 半透明白色背景 */
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); /* 阴影效果 */
+    width: 300px; /* 调整宽度 */
+}
+
+.form-container input {
+    width: 100%;
+    padding: 10px 15px; /* 上下各10像素，左右各15像素 */
+    margin-bottom: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    box-sizing: border-box; /* 让padding不会影响到元素的实际宽度 */
+}
+
+
+.form-container label {
+    margin-bottom: 5px;
+}
+
+.captcha-container {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.captcha-container img {
+    margin-right: 10px;
+    max-width: 80px; /* 设置最大宽度为80px */
+    max-height: 40px; /* 设置最大高度为40px */
+}
+.form-container button {
+    border: none;
+    background-color: #007bff;
+    color: #fff;
+    cursor: pointer;
+    width: 50%; /* 设置按钮宽度为表单容器的一半 */
+    padding: 10px; /* 按钮内边距 */
+    border-radius: 20px; /* 圆角矩形样式 */
+    display: block; /* 让按钮元素成为块级元素 */
+    margin: 20px auto 0; /* 上外边距20像素，左右自动居中 */
+}

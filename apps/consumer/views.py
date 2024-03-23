@@ -1,4 +1,5 @@
 from django.http import HttpResponse, JsonResponse
+from django.shortcuts import render
 from django.views import View
 import json
 from apps.consumer.models import Consumer
@@ -10,7 +11,7 @@ class RegisterView(View):
 
     def get(self, request):
         """get请求返回页面"""
-        return HttpResponse('register')
+        return render(request,"register.html")
 
     def post(self, request):
         """post请求传递数据创建用户"""
