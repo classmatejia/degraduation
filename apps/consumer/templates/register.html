@@ -8,26 +8,29 @@
     <link rel="stylesheet" type="text/css" href="{% static 'css/register.css' %}">
 </head>
 <body>
-    <div id="app">
-        <div class="form-container">
-            <form action="#" method="post" @submit.prevent="sendName">
-                <label for="name">用户名：</label>
-                <input type="text" id="name" name="name" v-model="consumerName" required><br>
-                <label for="password">密码：</label>
-                <input type="password" id="password" name="password" required><br>
-                <label for="confirm_password">确认密码：</label>
-                <input type="password" id="confirm_password" name="confirm_password" required><br>
-                <div class="captcha-container">
-                    <label for="captcha">验证码：</label>
-                    <!-- 给验证码图片绑定点击事件 -->
-                    <img id="captcha-image" @click="fetchCaptcha" src="" alt="验证码">
-                </div>
-                <input type="text" id="captcha" name="captcha" required>
-                <button type="submit">注册</button>
-            </form>
-        </div>
+<div id="app">
+    <div class="form-container">
+        <form action="#" method="post" @submit.prevent="submitForm">
+            <label for="email">邮箱：</label>
+            <input type="email" id="email" name="email" v-model="email" @blur="sendEmail">
+            <span class="error-exists" v-show="emailExists" style="color: red;font-size: small">该邮箱已被注册</span><br>
+            <label for="name">用户名：</label>
+            <input type="text" id="name" name="name" v-model="consumerName" required><br>
+            <label for="password">密码：</label>
+            <input type="password" id="password" name="password" required><br>
+            <label for="confirm_password">确认密码：</label>
+            <input type="password" id="confirm_password" name="confirm_password" required><br>
+            <div class="captcha-container">
+                <label for="captcha">验证码：</label>
+                <!-- 给验证码图片绑定点击事件 -->
+                <img id="captcha-image" @click="fetchCaptcha" src="" alt="验证码">
+            </div>
+            <input type="text" id="captcha" name="captcha" required>
+            <button type="submit">注册</button>
+        </form>
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
-    <script src="{% static 'js/register.js' %}"></script>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+<script src="{% static 'js/register.js' %}"></script>
 </body>
 </html>

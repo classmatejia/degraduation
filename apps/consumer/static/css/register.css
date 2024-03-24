@@ -28,7 +28,6 @@ body {
     box-sizing: border-box; /* 让padding不会影响到元素的实际宽度 */
 }
 
-
 .form-container label {
     margin-bottom: 5px;
 }
@@ -44,6 +43,7 @@ body {
     max-width: 80px; /* 设置最大宽度为80px */
     max-height: 40px; /* 设置最大高度为40px */
 }
+
 .form-container button {
     border: none;
     background-color: #007bff;

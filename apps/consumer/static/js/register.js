@@ -1,56 +1,57 @@
 new Vue({
     el: '#app',
     data: {
-        consumerName: '', // 存储姓名输入框的值
+        consumerName: '', // 存储用户名输入框的值
+        email: '', // 存储邮箱输入框的值
         captchaUUID: '', // 存储生成的 UUID
-        captchaTimestamp: 0 // 存储验证码生成的时间戳
+        captchaTimestamp: 0, // 存储验证码生成的时间戳
+        emailExists: false // 存储邮箱是否已被注册的状态
     },
     methods: {
-        // 生成 UUID 并请求验证码图片
-        fetchCaptcha() {
-            const currentTime = Math.floor(Date.now() / 1000); // 获取当前时间戳（以秒为单位）
-            // 如果验证码的时间戳不存在或者已经超过300秒，则生成新的验证码
-            if (!this.captchaTimestamp || currentTime - this.captchaTimestamp > 300) {
-                // 生成 9 位数字的 UUID
-                this.captchaUUID = this.generateUUID();
-                // 更新验证码的时间戳
-                this.captchaTimestamp = currentTime;
-            }
-            // 请求验证码图片
-            fetch(`http://127.0.0.1:8000/captcha/${this.captchaUUID}`)
-                .then(response => {
-                    // 将返回的验证码图片设置到页面上
-                    document.getElementById('captcha-image').src = response.url;
-                })
-                .catch(error => {
-                    console.error('Error fetching captcha:', error);
-                });
-        },
-        // 发送姓名到后端的方法
-        sendName() {
+        // 发送邮箱到后端的方法
+        sendEmail() {
             // 发送 AJAX 请求
-            fetch('http://127.0.0.1:8080/registercountname', {
+            fetch('http://127.0.0.1:8000/registercountemail', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
-                    consumer_name: this.consumerName,
-                    captcha_uuid: this.captchaUUID // 将 UUID 作为参数发送到后端
+                    email: this.email
                 })
             })
                 .then(response => response.json())
                 .then(data => {
-                    console.log(data); // 在控制台输出返回的数据
+                    this.emailExists = data.count !== 0;
                 })
                 .catch(error => {
                     console.error('Error:', error); // 如果请求失败，在控制台输出错误信息
                 });
         },
-        // 生成 9 位数字的 UUID 的方法
-        generateUUID() {
-            return Math.floor(100000000 + Math.random() * 900000000);
-        }
+        fetchCaptcha() {
+            // 生成9位数字的UUID
+            let uuid = Math.floor(Math.random() * 1000000000).toString().padStart(9, '0');
+
+            // 构建验证码图片的 URL
+            let captchaUrl = `http://127.0.0.1:8000/captcha/${uuid}`;
+
+            // 发送 AJAX 请求获取图片验证码
+            fetch(captchaUrl)
+                .then(response => response.blob()) // 将响应转换为 Blob 对象
+                .then(blob => {
+                    // 使用 Blob 对象创建 URL
+                    // 将图片 URL 设置为 img 元素的 src
+                    document.getElementById('captcha-image').src = URL.createObjectURL(blob);
+                })
+                .catch(error => {
+                    console.error('Error:', error); // 如果请求失败，在控制台输出错误信息
+                });
+        },
+
+
+    },
+    submitForm() {
+
     },
     mounted() {
         // 页面加载时获取验证码
