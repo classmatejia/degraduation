@@ -38,6 +38,18 @@ body {
     margin-bottom: 10px;
 }
 
+.email-code {
+    display: flex;
+    align-items: flex-end;
+    margin-bottom: 10px;
+}
+
+.email-code {
+    margin-right: 10px;
+    max-width: 80px; /* 设置最大宽度为80px */
+    max-height: 40px; /* 设置最大高度为40px */
+}
+
 .captcha-container img {
     margin-right: 10px;
     max-width: 80px; /* 设置最大宽度为80px */

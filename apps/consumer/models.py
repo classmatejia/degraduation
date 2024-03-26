@@ -4,7 +4,7 @@ from django.db import models
 
 # Create your models here.
 class Consumer(AbstractUser):
-    mobile = models.CharField(max_length=11, unique=True, verbose_name='手机号')
+    mobile = models.CharField(max_length=11, unique=False, verbose_name='手机号')
     email = models.EmailField(unique=True, verbose_name='邮箱', blank=False, null=False)
 
     class Meta:

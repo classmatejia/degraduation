@@ -1,7 +1,10 @@
+from django.contrib.auth import login, authenticate
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render
 from django.views import View
 import json
+from django_redis import get_redis_connection
+
 from apps.consumer.models import Consumer
 
 
@@ -14,8 +17,25 @@ class RegisterView(View):
         return render(request, "register.html")
 
     def post(self, request):
-        """post请求传递数据创建用户"""
-        pass
+        register_data = json.loads(request.body.decode('utf-8'))
+        # 获取json中的数据
+        uuid = register_data.get('captchaUUID')
+        consumer_name = register_data.get('consumerName')
+        email = register_data.get('email')
+        password = register_data.get('password')
+        phone = register_data.get('phone')
+        # 那到redis中验证码的值
+        redis_conn = get_redis_connection('code')
+        captcha_value = redis_conn.get(f'img_{uuid}')
+
+        if captcha_value is not None and captcha_value.decode('utf-8') == register_data.get('captcha'):
+            # 创建一个新的Consumer对象，并保存到数据库中
+            user = Consumer.objects.create_user(username=consumer_name, email=email, password=password, mobile=phone)
+            if register_data.get('loginDirectly'):
+                login(request, user)
+            return JsonResponse({'register': 'OK', 'captcha': 1})
+        else:
+            return JsonResponse({'register': "error", 'captcha': 0})
 
 
 class ConsumerEmailCounter(View):
@@ -30,4 +50,22 @@ class ConsumerEmailCounter(View):
 class LoginView(View):
 
     def get(self, request):
-        return HttpResponse('login')
+        return render(request, 'login.html')
+
+    def post(self, request):
+        json_dict = json.loads(request.body.decode('utf-8'))
+        username = json_dict.get('username')
+        password = json_dict.get('password')
+        user = authenticate(username=username, password=password)
+        if user is None:
+            return JsonResponse({'code': 400, 'errmsg': '用户名或者密码错误'})
+        else:
+            login(request, user)
+            request.session.set_expiry(None)
+            return JsonResponse({'code': 200, 'errmsg': 'OK'})
+
+
+class IndexView(View):
+
+    def get(self, request):
+        return HttpResponse("index")
