@@ -62,10 +62,15 @@ class LoginView(View):
         else:
             login(request, user)
             request.session.set_expiry(None)
-            return JsonResponse({'code': 200, 'errmsg': 'OK'})
+            response = JsonResponse({'code': 200, 'errmsg': 'ok'})
+            # 注册时用户名写入到cookie，有效期15天
+            print(user.username.encode("utf-8").decode("utf-8"))
+            response.set_cookie('username', user.username.encode("utf-8"), max_age=3600 * 24 * 15)
+
+            return response
 
 
 class IndexView(View):
 
     def get(self, request):
-        return HttpResponse("index")
+        return render(request, 'index.html')
