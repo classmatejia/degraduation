@@ -27,6 +27,7 @@ register_converter(ConsumerConverter, 'username')
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("captcha/", include("apps.verifications.urls")),
+    path("merchant/", include("apps.merchant.urls")),
     path("", include("apps.consumer.urls")),
 
 ]

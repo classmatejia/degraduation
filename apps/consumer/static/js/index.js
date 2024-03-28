@@ -6,7 +6,7 @@ const nav = new Vue({
         username: '' // 用户
     },
     mounted() {
-        // 检查 cookie 中是否存在用户名
+        // 检查 cookie 中是否存在用户名vue-init webpack frontend
         const username = this.getCookie('username');
         if (username) {
             this.isLoggedIn = true;

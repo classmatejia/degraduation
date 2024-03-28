@@ -1,0 +1,51 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>注页面</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/mcregister.css' %}">
+</head>
+<body>
+<div id="app">
+    <div class="form-container">
+        <form action="#" method="post" @submit.prevent="submitForm">
+            <label for="email">邮箱：</label>
+            <input type="email" id="email" name="email" v-model="email" @blur="sendEmail">
+            <span class="error-exists" v-show="emailExists"
+                  style="color: red;font-size: small">该邮箱已被注册</span><br>
+            <label for="name">用户名：</label>
+            <input type="text" id="name" name="name" v-model="consumerName" required><br>
+            <label for="password">密码：</label>
+            <input type="password" id="password" name="password" v-model="password" required><br>
+            <label for="confirm_password">确认密码：</label>
+            <input type="password" id="confirm_password" name="confirm_password" v-model="confirmPassword" required
+                   @input="comparePasswords"><br>
+            <label for="mobile-phone">电话：</label>
+            <input type="text" id="mobile-phone" name="mobile-phone" v-model="phoneNumber" required><br>
+            <span class="error-exists" v-show="!passwordsMatch"
+                  style="color: red;font-size: small">密码不一致</span><br>
+            <div class="captcha-container">
+                <label for="captcha">验证码：</label>
+                <!-- 给验证码图片绑定点击事件 -->
+                <input type="text" id="captcha" name="captcha" v-model="captcha" style="width:40%" required>
+                <img id="captcha-image" @click="fetchCaptcha" src="" alt="验证码">
+                <span class="error-exists" v-show="!captchaMatch"
+                      style="color: red;font-size: small">验证码不一致or过期</span><br>
+            </div>
+            {#            <label for="Verification-code">邮箱验证码：</label>#}
+            {#            <div class="email-code">#}
+            {#                <input type="text" id="Verification-code" name="Verification-code" v-model="Verification_code" style="width:40%">#}
+            {#                <button @click="sendVerificationCode">发送验证码</button>#}
+            {#            </div>#}
+            <button type="submit">注册</button>
+            <label for="loginDirectly">注册后直接登录：</label>
+            <input type="checkbox" id="loginDirectly" name="loginDirectly" v-model="loginDirectly">
+        </form>
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+<script src="{% static 'js/mcregister.js' %}"></script>
+</body>
+</html>

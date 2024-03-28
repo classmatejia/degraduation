@@ -36,7 +36,8 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     'corsheaders',
     "apps.consumer",
-    "apps.verifications"
+    "apps.verifications",
+    "apps.merchant"
 ]
 # 中间件
 MIDDLEWARE = [
@@ -49,7 +50,7 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
-
+CORS_ORIGIN_ALLOW_ALL = True
 ROOT_URLCONF = "degraduation.urls"
 # 模板
 TEMPLATES = [
@@ -199,4 +200,3 @@ CORS_ORIGIN_WHITELIST = (
     'http://localhost:8000',
     'http://localhost:63343'
 )
-CORS_ALLOW_CREDENTIALS = True  # 允许携带cookie
