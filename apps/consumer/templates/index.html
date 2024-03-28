@@ -10,7 +10,7 @@
 <body>
 <div class="wrapper">
     <!-- 顶部导航条 -->
-    <div class="top-nav" id="nav">
+    <div class="top-nav" id="nav" v-cloak>
         <div class="top-nav-content">
             <div class="l-nav">
                 <ul>
@@ -78,7 +78,7 @@
         </div>
     </div>
     <!-- 首页主体部分 -->
-    <div class="screen">
+    <div class="screen" id="screen">
         <div class="screen-content">
             <div class="left-col">
                 <div class="header">
@@ -98,7 +98,8 @@
                                 class="arrow"></span></li>
                         <li><span class="icon icon6"></span><span class="text"><a href="#">机票</a> / <a
                                 href="#">火车票</a></span><span class="arrow"></span></li>
-                        <li><span class="icon icon7"></span><span class="text"><a href="#">休闲娱乐</a> / <a href="#">KTV</a></span><span
+                        <li><span class="icon icon7"></span><span class="text"><a href="#">休闲娱乐</a> / <a
+                                href="#">KTV</a></span><span
                                 class="arrow"></span></li>
                         <li><span class="icon icon8"></span><span class="text"><a href="#">生活服务</a></span><span
                                 class="arrow"></span></li>
@@ -108,13 +109,16 @@
                                 href="#">婚纱摄影</a> / <a href="#">婚宴</a></span><span class="arrow"></span></li>
                         <li><span class="icon icon11"></span><span class="text"><a href="#">亲子</a> / <a
                                 href="#">儿童乐园</a> / <a href="#">幼教</a></span><span class="arrow"></span></li>
-                        <li><span class="icon icon12"></span><span class="text"><a href="#">运动健身</a> / <a href="#">健身中心</a></span><span
+                        <li><span class="icon icon12"></span><span class="text"><a href="#">运动健身</a> / <a
+                                href="#">健身中心</a></span><span
                                 class="arrow"></span></li>
                         <li><span class="icon icon13"></span><span class="text"><a href="#">家装</a> / <a
                                 href="#">建材</a> / <a href="#">家具</a></span><span class="arrow"></span></li>
-                        <li><span class="icon icon14"></span><span class="text"><a href="#">学习培训</a> / <a href="#">音乐培训</a></span><span
+                        <li><span class="icon icon14"></span><span class="text"><a href="#">学习培训</a> / <a
+                                href="#">音乐培训</a></span><span
                                 class="arrow"></span></li>
-                        <li><span class="icon icon15"></span><span class="text"><a href="#">医疗健康</a> / <a href="#">宠物</a> / <a
+                        <li><span class="icon icon15"></span><span class="text"><a href="#">医疗健康</a> / <a
+                                href="#">宠物</a> / <a
                                 href="#">爱车</a></span><span class="arrow"></span></li>
                         <li><span class="icon icon16"></span><span class="text"><a href="#">酒吧</a> / <a
                                 href="#">密室逃脱</a></span><span class="arrow"></span></li>
@@ -141,9 +145,16 @@
             <div class="right-col">
                 <div class="login-register">
                     <img class="avatar" src="{% static 'img/icon/avatar.jpg' %}" alt=""><br>
-                    <span class="say-hello">Hi! 你好</span><br>
-                    <a class="register" href="/register">注册</a><br>
-                    <a class="login" href="/login">立即登录</a>
+                    <div v-if="!isLoggedIn">
+                        <span class="say-hello">Hi! 你好</span><br>
+                        <a class="register" href="/register">注册</a><br>
+                        <a class="login" href="/login">立即登录</a>
+                    </div>
+                    <div v-else>
+                        <span class="say-hello">Hi![[ username ]]</span><br>
+                        <button class="logout" @click='logout'>退出</button>
+                    </div>
+
                 </div>
                 <div class="qr-code">
                     <img class="download-qr" src="{% static 'img/icon/download-qr.png' %}" alt=""><br>
@@ -155,21 +166,22 @@
         </div>
     </div>
     <!-- 有格调 -->
-    <div class="quality-box"></div>
+    <div class="quality-box">666</div>
     <!-- 狠优惠 -->
-    <div class="discount-box"></div>
+    <div class="discount-box">666</div>
     <!-- 猫眼电影 -->
-    <div class="maoyan-box"></div>
+    <div class="maoyan-box">666</div>
     <!-- 推荐民宿· -->
-    <div class="homestay-box"></div>
+    <div class="homestay-box">666</div>
     <!-- 猜你喜欢 -->
-    <div class="recommend-box"></div>
+    <div class="recommend-box">666</div>
     <!-- 乐购导航 -->
-    <div class="mt-nav"></div>
+    <div class="mt-nav">666</div>
     <!-- 底部 -->
-    <div class="bottom-box"></div>
+    <div class="bottom-box">666</div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+    <script type='text/javascript' src="{% static 'js/index.js' %}"></script>
 </div>
-<script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
-<script type="text/javascript" src="{% static 'js/index.js' %}"></script>
 </body>
 </html>
