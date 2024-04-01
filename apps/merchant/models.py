@@ -7,6 +7,8 @@ class Merchant(models.Model):
     email = models.EmailField(max_length=125, verbose_name='邮箱', unique=True)
     password = models.CharField(max_length=128, verbose_name='密码')
     mobile = models.CharField(max_length=11, unique=False, verbose_name='手机号', default=None)
+    shop = models.ForeignKey('shop.Shop', on_delete=models.SET_NULL, related_name='shops', null=True,
+                             verbose_name='店铺')
 
     class Meta:
         db_table = 'mc_users'

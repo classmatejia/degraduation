@@ -1,0 +1,135 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+#container {
+    width: 70%;
+    margin: 0 auto;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #f8f5f5;
+}
+
+.info, .setup-shop {
+    color: red;
+    width: 50%; /* 设置每个 div 占据的宽度为父容器的一半 */
+    box-sizing: border-box; /* 盒模型设为边界框 */
+    padding: 20px; /* 添加内边距 */
+
+}
+
+.clearfix::after {
+    content: ""; /* 伪元素内容为空 */
+    display: table; /* 显示为表格 */
+    clear: both; /* 清除浮动 */
+}
+
+#store-info {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+    padding: 20px;
+    background-image: url('../img/regbgimg.jpg'); /* 添加背景图 */
+    background-size: cover; /* 背景图铺满 */
+    background-repeat: no-repeat; /* 不重复 */
+    background-position: center center; /* 居中 */
+    margin-bottom: 20px;
+    border-radius: 10px; /* 添加圆角 */
+    color: #fff; /* 设置文本颜色为白色 */
+    text-shadow: -1px -1px 0 #000,
+    1px -1px 0 #000,
+    -1px 1px 0 #000,
+    1px 1px 0 #000; /* 添加白色描边 */
+}
+
+.avatar {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    margin-bottom: 10px;
+}
+
+.btn-container {
+    margin-top: 20px;
+}
+
+.openShopBtn {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    text-decoration: none;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-right: 10px;
+
+
+}
+
+.btn {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    text-decoration: none;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-right: 10px;
+}
+
+.btn:hover {
+    background-color: #0056b3;
+}
+
+#open-shop-btn {
+    background-color: #28a745;
+}
+
+.product {
+    width: 100%;
+    margin-top: 20px;
+    padding: 10px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.product-info {
+    flex: 1;
+}
+
+.product-name {
+    font-weight: bold;
+}
+
+.product-price {
+    color: #007bff;
+}
+
+.action-buttons {
+    display: flex;
+}
+
+.action-button {
+    padding: 5px 10px;
+    margin-left: 5px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.action-button:hover {
+    background-color: #0056b3;
+}

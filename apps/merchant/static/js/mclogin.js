@@ -30,7 +30,7 @@ new Vue({
                     window.location.href = 'http://127.0.0.1:8000/merchant/index';
                 } else {
                     // 登录失败，弹窗提示账号或密码错误
-                    alert("密码账号错误");
+                    alert("密账号错误"+data.code);
                 }
             })
             .catch(error => {

@@ -1,12 +1,90 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>hi,商检</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>商家信息</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/mcindex.css' %}">
+    <!-- 新 Bootstrap5 核心 CSS 文件 -->
+    <link rel="stylesheet" href="https://cdn.staticfile.net/twitter-bootstrap/5.1.1/css/bootstrap.min.css">
+
+    <!--  popper.min.js 用于弹窗、提示、下拉菜单 -->
+    <script src="https://cdn.staticfile.net/popper.js/2.9.3/umd/popper.min.js"></script>
+
+    <!-- 最新的 Bootstrap5 核心 JavaScript 文件 -->
+    <script src="https://cdn.staticfile.net/twitter-bootstrap/5.1.1/js/bootstrap.min.js"></script>
 </head>
 <body>
-<img class='touxiang' src="http://">
-<button>开店</button>
-<div id="overview"></div>
+<div id="container">
+    <!-- 模态框 -->
+    <div class="modal" id="myModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <!-- 模态框头部 -->
+                <div class="modal-header">
+                    <h4 class="modal-title">输入</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <!-- 模态框内容 -->
+                <div class="modal-body">
+                    <form @submit.prevent="submitForm">
+                        <div class="mb-3">
+                            <label for="storeName" class="form-label">店名</label>
+                            <input type="text" class="form-control" id="storeName" v-model="formData.shop_name">
+                        </div>
+                        <div class="mb-3">
+                            <label for="storeAddress" class="form-label">地址</label>
+                            <input type="text" class="form-control" id="storeAddress" v-model="formData.address">
+                        </div>
+                        <div class="mb-3">
+                            <label for="storePhone" class="form-label">电话</label>
+                            <input type="text" class="form-control" id="storePhone" v-model="formData.phone">
+                        </div>
+                        <button type="submit" class="btn btn-primary" @click="submitForm">提交</button>
+                    </form>
+                </div>
+                <!-- 模态框底部 -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">关闭</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="store-info">
+        <div id="info" style="float: left">
+            <img src="{% static 'img/avatar.jpg' %}" alt="" class="avatar">
+            <h2>{{ store.name }}</h2>
+            <p>地址: {{ store.address }}</p>
+            <p>评分: {{ store.rating }}</p>
+            <div class="btn-container">
+                <!-- 开店按钮 -->
+                <button id="openShopBtn" type="button" class="btn btn-primary" data-bs-toggle="modal"
+                        data-bs-target="#myModal">开店</button>
+                    <button class="btn">退出</button>
+                    <button class="btn" style="background-color: rgba(245,245,95,0.89);color: #222222">修改信息</button>
+            </div>
+        </div>
+    </div>
+    {% for product in products %}
+        <div class="product">
+            <div class="product-info">
+                <p class="product-name">{{ product.name }}</p>
+                <p>{{ product.description }}</p>
+                <p class="product-price">{{ product.price }}</p>
+            </div>
+            <div class="action-buttons">
+                <button class="action-button">详情</button>
+                <button class="action-button">编辑</button>
+                <button class="action-button" style="color: red">删除</button>
+            </div>
+        </div>
+    {% endfor %}
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+<script src="{% static 'js/mcindex.js' %}"></script>
+
 </body>
 </html>

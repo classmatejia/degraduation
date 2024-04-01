@@ -37,7 +37,8 @@ INSTALLED_APPS = [
     'corsheaders',
     "apps.consumer",
     "apps.verifications",
-    "apps.merchant"
+    "apps.merchant",
+    'apps.shop'
 ]
 # 中间件
 MIDDLEWARE = [
@@ -49,6 +50,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    # "apps.merchant.middleware.McisLoggedIn"
 ]
 CORS_ORIGIN_ALLOW_ALL = True
 ROOT_URLCONF = "degraduation.urls"
