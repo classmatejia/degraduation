@@ -109,9 +109,12 @@ body {
 }
 
 .product-name {
+    font-size:20px;
     font-weight: bold;
 }
-
+.product-desc{
+    color: #8c8a8a;
+}
 .product-price {
     color: #007bff;
 }

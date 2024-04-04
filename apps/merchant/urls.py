@@ -8,5 +8,8 @@ urlpatterns = [
     path('login', MeLoginView.as_view()),
     path('index', MeIndexView.as_view()),
     path('setupshop', SetupshopView.as_view()),
+    path('logout', MeLogoutView.as_view()),
+    path('alterinfo', AlterInfoView.as_view()),
+
 
 ]

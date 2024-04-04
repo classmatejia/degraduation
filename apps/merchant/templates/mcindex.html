@@ -51,6 +51,75 @@
             </div>
         </div>
     </div>
+    <!-- 模态框二：更新信息-->
+    <div class="modal" id="alterModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <!-- 模态框头部 -->
+                <div class="modal-header">
+                    <h4 class="modal-title">更新数据</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <!-- 模态框内容 -->
+                <div class="modal-body">
+                    <form @submit.prevent="alterInfo">
+                        <div class="mb-3">
+                            <label for="alterName" class="form-label">店名</label>
+                            <input type="text" class="form-control" id="alterName" v-model="alterData.alterName">
+                        </div>
+                        <div class="mb-3">
+                            <label for="alterAddress" class="form-label">地址</label>
+                            <input type="text" class="form-control" id="alterAddress" v-model="alterData.alterAddress">
+                        </div>
+                        <div class="mb-3">
+                            <label for="alterNumber" class="form-label">电话</label>
+                            <input type="text" class="form-control" id="alterNumber" v-model="alterData.alterNumber">
+                        </div>
+                        <button type="submit" class="btn btn-primary" @click="alterInfo">提交</button>
+                    </form>
+                </div>
+                <!-- 模态框底部 -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">关闭</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 模态框三：添加商品-->
+        <div class="modal" id="addModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <!-- 模态框头部 -->
+                <div class="modal-header">
+                    <h4 class="modal-title">商品信息</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <!-- 模态框内容 -->
+                <div class="modal-body">
+                    <form @submit.prevent="addGoods">
+                        <div class="mb-3">
+                            <label for="addGoodsName" class="form-label">商品名</label>
+                            <input type="text" class="form-control" id="addGoodsName" v-model="addGoodsData.goods_name">
+                        </div>
+                        <div class="mb-3">
+                            <label for="addGoodsDesc" class="form-label">描述</label>
+                            <input type="text" class="form-control" id="addGoodsDesc" v-model="addGoodsData.goods_desc">
+                        </div>
+                        <div class="mb-3">
+                            <label for="addPrice" class="form-label">价格</label>
+                            <input type="text" class="form-control" id="addPrice" v-model="addGoodsData.goods_price">
+                        </div>
+                        <button type="submit" class="btn btn-primary" @click="addGoods">提交</button>
+                    </form>
+                </div>
+                <!-- 模态框底部 -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">关闭</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 
     <div id="store-info">
         <div id="info" style="float: left">
@@ -61,23 +130,27 @@
             <div class="btn-container">
                 <!-- 开店按钮 -->
                 <button id="openShopBtn" type="button" class="btn btn-primary" data-bs-toggle="modal"
-                        data-bs-target="#myModal">开店</button>
-                    <button class="btn">退出</button>
-                    <button class="btn" style="background-color: rgba(245,245,95,0.89);color: #222222">修改信息</button>
+                        data-bs-target="#myModal">开店
+                </button>
+                <button class="btn" @click="logout">退出</button>
+                <button class="btn" style="background-color: rgba(245,245,95,0.89);color: #222222"
+                        data-bs-toggle="modal" data-bs-target="#alterModal">修改信息
+                </button>
             </div>
         </div>
     </div>
+    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addModal">添加商品</button>
     {% for product in products %}
         <div class="product">
             <div class="product-info">
                 <p class="product-name">{{ product.name }}</p>
-                <p>{{ product.description }}</p>
-                <p class="product-price">{{ product.price }}</p>
+                <p class="product-desc">{{ product.description }}</p>
+                <p class="product-price">￥{{ product.price }}</p>
             </div>
             <div class="action-buttons">
                 <button class="action-button">详情</button>
                 <button class="action-button">编辑</button>
-                <button class="action-button" style="color: red">删除</button>
+                <button class="action-button" style="color: red" @click="deleteGoods" data-id="{{ product.item_id }}">删除</button>
             </div>
         </div>
     {% endfor %}
@@ -85,6 +158,5 @@
 
 <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
 <script src="{% static 'js/mcindex.js' %}"></script>
-
 </body>
 </html>
