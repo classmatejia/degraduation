@@ -1,0 +1,90 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ user.username }}</title>
+    <link rel="stylesheet" href="{% static 'css/personal.css' %}">
+    <!-- 新 Bootstrap5 核心 CSS 文件 -->
+    <link rel="stylesheet" href="https://cdn.staticfile.net/twitter-bootstrap/5.1.1/css/bootstrap.min.css">
+
+    <!--  popper.min.js 用于弹窗、提示、下拉菜单 -->
+    <script src="https://cdn.staticfile.net/popper.js/2.9.3/umd/popper.min.js"></script>
+
+    <!-- 最新的 Bootstrap5 核心 JavaScript 文件 -->
+    <script src="https://cdn.staticfile.net/twitter-bootstrap/5.1.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<div class="container mt-3">
+    <div class="row content-section">
+        <div class="col-md-3" id="personal">
+            <div class="card">
+                <div class="card-header">姓名：{{ user.username }}</div>
+                <div class="card-body">邮箱：{{ user.email }}</div>
+                <div class="card-footer">入驻日期：{{ user.date }}</div>
+            </div>
+
+            <h3>订单：</h3>
+            {% for order in orders %}
+                <ul class="list-group">
+                    <li class="list-group-item">
+                        <div class="card">
+                            <div class="card-header">{{ order.shop }}<br>{{ order.date }}</div>
+                            <div class="card-body">
+                                {% for good in order.goods %}
+                                    {{ good.name }}<br>
+                                    {{ good.price }}
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            {% endfor %}
+        </div>
+
+        <div id="comments" class="col-md-6">
+            <div>
+                <h3>评论</h3>
+                {% for comment in comments %}
+                    <ul class="list-group">
+                        <li class="list-group-item">
+                            <div class="card">
+                                <div class="card-header">{{ comment.shop }}评分：{{ comment.mark }}⭐</div>
+                                <div class="card-body">{{ comment.content }} </div>
+                                <div class="card-footer">{{ comment.date }}</div>
+                                <button type="button" class="btn btn-danger" data-id="{{ comment.id }}"
+                                        @click="deleteComment">删除评论
+                                </button>
+                            </div>
+                        </li>
+                    </ul>
+                {% endfor %}
+            </div>
+        </div>
+
+
+        <div id="browsing" class="col-md">
+            <h3>最近浏览：</h3>
+            {% for brows in browsing %}
+                <ul class="list-group">
+                    <li class="list-group-item">
+                        <div class="card">
+                            <div class="card-header">{{ brows.date }}</div>
+                            <div class="card-body">{{ brows.shop }}</div>
+                        </div>
+                    </li>
+                </ul>
+            {% empty %}
+                无
+            {% endfor %}
+
+
+        </div>
+
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+<script src="{% static 'js/personal.js' %}"></script>
+</body>
+</html>

@@ -10,7 +10,8 @@ const app = new Vue({
         formData: {
             shop_name: '',
             address: '',
-            phone: ''
+            phone: '',
+            shop_type: ''
         },
         addGoodsData: {
             goods_name: '',
@@ -21,6 +22,20 @@ const app = new Vue({
         isModalOpen: false
     },
     mounted() {
+        fetch('http://127.0.0.1:8000/merchant/isopen', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+        }).then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        }).then(data => {
+                this.isModalOpen = data.code === 200;
+            }
+        )
     },
     methods: {
         submitForm() {
@@ -150,6 +165,6 @@ const app = new Vue({
             }).catch(error => {
                 console.error('Error:', error);
             });
-        }
+        },
     }
 });

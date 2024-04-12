@@ -1,187 +1,212 @@
 {% load static %}
 <!DOCTYPE html>
-<html lang="">
+<html lang="en">
+
 <head>
-    <meta charset="utf-8">
-    <title>广州乐购网-广州美食_酒店_旅游_团购_电影_吃喝玩乐</title>
-    <link rel="stylesheet" type="text/css" href="{% static 'css/index.css' %}">
-    <link rel="icon" href="{% static 'img/icon/title.png' %}">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LocalHub</title>
+    <link rel="stylesheet" href="{% static 'css/index.css' %}">
+    <!-- 新 Bootstrap5 核心 CSS 文件 -->
+    <link rel="stylesheet" href="https://cdn.staticfile.net/twitter-bootstrap/5.1.1/css/bootstrap.min.css">
+
+    <!--  popper.min.js 用于弹窗、提示、下拉菜单 -->
+    <script src="https://cdn.staticfile.net/popper.js/2.9.3/umd/popper.min.js"></script>
+
+    <!-- 最新的 Bootstrap5 核心 JavaScript 文件 -->
+    <script src="https://cdn.staticfile.net/twitter-bootstrap/5.1.1/js/bootstrap.min.js"></script>
 </head>
+ 
 <body>
-<div class="wrapper">
-    <!-- 顶部导航条 -->
-    <div class="top-nav" id="nav" v-cloak>
-        <div class="top-nav-content">
-            <div class="l-nav">
-                <ul>
-                    <li class="selected-city"><span></span>广州</li>
-                    <li class="change-city"><a href="#">切换城市</a></li>
-                    <li class="l-bra">[</li>
-                    <li class="city"><a href="#">佛山</a></li>
-                    <li class="city"><a href="#">顺德</a></li>
-                    <li class="city"><a href="#">南沙</a></li>
-                    <li class="r-bra">]</li>
+<!-- 最顶部导航栏 -->
+<nav class="navbar navbar-expand-sm bg-light justify-content-between" id="nav">
+    <a class="navbar-brand" href="#">LocalHub</a>
+    <div class="navbar-list">
+        <span v-if="!isLoggedIn">
+            <a href="/login" style="margin: 10px">登录</a>
+            <a href="/register" style="margin: 10px">注册</a>
+        </span>
+        <span v-else>[[username]]</span>
+        <a href="/personal" style="margin: 8px">个人中心</a>
 
+
+    </div>
+</nav>
+
+<div class="container mt-3">
+    <div class="row content-section">
+        <!-- 搜索框 -->
+        <div class="search-container" id="search-container">
+            <div class="logo-wrapper">
+                <img src="{% static 'img/icon/22.png' %}" alt="Logo">
+            </div>
+            <form  class="search-form" action="http://127.0.0.1:8000/search" method="get">
+                <input type="text"  name="query" class="search-input form-control" placeholder="搜索" aria-label="Search">
+                <button class="search-btn btn btn-outline-primary" type="submit">搜索</button>
+            </form>
+        </div>
+
+        <!-- 侧边栏 -->
+        <div class="sidebar col-md-2" style="padding: 0">
+            <div class="sidebar-inner">
+                <ul>
+                    <li>
+                        <h4 style="margin-bottom: 20px;">分类</h4>
+                    </li>
+                    <li class="sidebar-item">
+                        <p>美食</p>
+                        <div class="sidebar-mask">
+                            <a href="/category67">火锅</a>
+                            <a href="/category68">本帮江浙菜</a>
+                            <a href="/category69">日本菜</a>
+                            <a href="/category70">面包甜点</a>
+                            <a href="/category71">咖啡厅</a>
+                            <a href="/category72">自助餐</a>
+                            <a href="/category73">小吃快餐</a>
+                            <a href="/category74">西餐</a>
+                            <a href="/category75">韩国料理</a>
+
+                        </div>
+                    </li>
+                    <li class="sidebar-item">
+                        <p>休闲娱乐</p>
+                        <div class="sidebar-mask">
+                            <a href="/category77">足疗按摩</a>
+                            <a href="/category78">洗浴/汗蒸</a>
+                            <a href="/category79">KTV</a>
+                            <a href="/category80">酒吧</a>
+                            <a href="/category81">茶馆</a>
+                            <a href="/category82">网吧网咖</a>
+                            <a href="/category83">棋牌室</a>
+                            <a href="/category84">桌球馆</a>
+                        </div>
+                    </li>
+                    <li class="sidebar-item">
+                        <p>周边游</p>
+                        <div class="sidebar-mask">
+                            <a href="/category86">展馆展览</a>
+                            <a href="/category87">采摘/农家乐</a>
+                            <a href="/category88">温泉</a>
+                            <a href="/category89">动植物园</a>
+                            <a href="/category90">水上娱乐</a>
+                            <a href="/category91">滑雪</a>
+                            <a href="/category92">景点</a>
+                        </div>
+                    </li>
+                    <li class="sidebar-item">
+                        <p>健身运动</p>
+                        <div class="sidebar-mask">
+                            <a href="/category94"> 健身中心 </a>
+                            <a href="/category95"> 游泳馆</a>
+                            <a href="/category96"> 羽毛球馆 </a>
+                            <a href="/category97"> 篮球场 </a>
+                            <a href="/category98"> 乒乓球馆 </a>
+                            <a href="/category99"> 足球场 </a>
+                            <a href="/category100"> 体育场馆 </a>
+                        </div>
+
+                    </li>
+                    <li class="sidebar-item">
+                        <p>丽人</p>
+                        <div class="sidebar-mask">
+                            <a href="/category102"> 美发</a>
+                            <a href="/category103"> 美甲美睫</a>
+                            <a href="/category104"> 美容/SPA </a>
+                            <a href="/category105"> 瑜伽</a>
+                            <a href="/category106"> 纹身 </a>
+                            <a href="/category107"> 化妆品</a>
+                        </div>
+                    </li>
+                    <li class="sidebar-item">
+                        <p>购物</p>
+                        <div class="sidebar-mask">
+                            <a href="/category109"> 综合商场</a>
+                            <a href="/category110"> 服饰鞋包</a>
+                            <a href="/category111"> 运动户外</a>
+                            <a href="/category112"> 珠宝饰品</a>
+                        </div>
+                    </li>
+                    <li class="sidebar-item">
+                        <p>生活服务</p>
+                        <div class="sidebar-mask">
+                            <a href="/category114"> 文印图文</a>
+                            <a href="/category115"> 搬家运输</a>
+                            <a href="/category116"> 生活配送</a>
+                            <a href="/category117"> 家政服务</a>
+                            <a href="/category118"> 成人用品</a>
+                            <a href="/category119"> 家电数码维修</a>
+                            <a href="/category120"> 居家维修</a>
+                        </div>
+                    </li>
+                    <li class="sidebar-item">
+                        <p>电影演出赛事</p>
+                        <div class="sidebar-mask">
+                            <a href="/category122"> 电影院 </a>
+                            <a href="/category123"> 剧场/影院 </a>
+                            <a href="/category124"> 音乐厅/礼堂 </a>
+                            <a href="/category125"> 热门演出</a>
+                        </div>
+                    </li>
+                    <li class="sidebar-item">
+                        <p>医疗健康</p>
+                        <div class="sidebar-mask">
+                            <a href="/category127"> 口腔齿科 </a>
+                            <a href="/category128"> 体检中心 </a>
+                            <a href="/category129"> 医院</a>
+                            <a href="/category130"> 药店</a>
+                            <a href="/category131"> 中医 </a>
+                            <a href="/category132"> 宠物医院</a>
+                            <a href="/category133"> 整形</a>
+                        </div>
+                    </li>
                 </ul>
             </div>
-
-            <div class="r-nav">
-                <ul>
-                    <li v-if="!isLoggedIn" class="login"><a href="/login">立即登录</a></li>
-                    <li v-else class="username">[[ username ]]</li>
-                    <li v-if="!isLoggedIn" class="register"><a href="/register">注册</a></li>
-
-                    <li class="account"><a href="#">个人中心</a></li>
-                    <li class="app"><a href="#">手机APP</a></li>
-                    <li class="merchant"><a href="#">商家中心</a></li>
-                    <li class="site-nav"><a href="#">网站导航</a></li>
-                </ul>
-            </div>
         </div>
-    </div>
-    <!-- 搜索框区域 -->
-    <div class="search" id="search">
-        <div class="search-content">
-            <div class="logo">
-                <a href="#"><img src="{% static '/img/icon/22.png' %}" alt=""></a>
-            </div>
-            <div class="search-module">
-                <div class="search-box">
-                    <form action="#">
-                        <label>
-                            <input type="text" name="query" placeholder="搜索商家或地点">
-                        </label>
-                        <button><span class="search-btn"></span></button>
-                    </form>
-
+        <!-- 轮播图 -->
+        <div id="demo" class="carousel slide col-md-8" data-bs-ride="carousel" style="height: 280px">
+            <!-- 轮播图片 -->
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <img src="https://static.jyshare.com/images/mix/img_fjords_wide.jpg" class="d-block"
+                         style="width:100%">
                 </div>
-                <div class="hot-word">
-                    <ul>
-                        <li><a href="#">广州长隆欢乐世界</a></li>
-                        <li><a href="#">广州长隆野生动物世界</a></li>
-                        <li><a href="#">
-                            正佳极地海洋世界
-                        </a></li>
-                        <li><a href="#">白云山风景名胜区</a></li>
-                        <li><a href="#">广州塔</a></li>
-                    </ul>
+                <div class="carousel-item">
+                    <img src="https://static.jyshare.com/images/mix/img_nature_wide.jpg" class="d-block"
+                         style="width:100%">
+                </div>
+                <div class="carousel-item">
+                    <img src="https://static.jyshare.com/images/mix/img_mountains_wide.jpg" class="d-block"
+                         style="width:100%">
                 </div>
             </div>
-            <div class="link">
-                <a href="#" class="waimai">乐购外卖</a>
-                <a href="#" class="maoyan">猫眼电影</a>
-                <a href="#" class="jiudian">乐购酒店</a>
-                <a href="#" class="minsu">民宿/公寓</a>
-                <a href="#" class="shangjia">商家入驻</a>
-                <a href="#" class="gongyi">乐购公益</a>
-            </div>
+            <!-- 左右切换按钮 -->
+{#            <button class="carousel-control-prev" type="button" data-bs-target="#demo" data-bs-slide="prev">#}
+{#                <span class="carousel-control-prev-icon"></span>#}
+{#            </button>#}
+            <button class="carousel-control-next" type="button" data-bs-target="#demo" data-bs-slide="next">
+                <span class="carousel-control-next-icon"></span>
+            </button>
         </div>
-    </div>
-    <!-- 首页主体部分 -->
-    <div class="screen" id="screen">
-        <div class="screen-content">
-            <div class="left-col">
-                <div class="header">
-                    <span>全部分类</span>
-                </div>
-                <div class="service-list">
-                    <ul>
-                        <li><span class="icon icon1"></span><span class="text"><a href="#">美食</a></span><span
-                                class="arrow"></span></li>
-                        <li><span class="icon icon2"></span><span class="text"><a href="#">外卖</a></span><span
-                                class="arrow"></span></li>
-                        <li><span class="icon icon3"></span><span class="text"><a href="#">酒店<span
-                                class="hot">HOT</span></a></span><span class="arrow"></span></li>
-                        <li><span class="icon icon4"></span><span class="text"><a href="#">榛果民宿</a></span><span
-                                class="arrow"></span></li>
-                        <li><span class="icon icon5"></span><span class="text"><a href="#">猫眼电影</a></span><span
-                                class="arrow"></span></li>
-                        <li><span class="icon icon6"></span><span class="text"><a href="#">机票</a> / <a
-                                href="#">火车票</a></span><span class="arrow"></span></li>
-                        <li><span class="icon icon7"></span><span class="text"><a href="#">休闲娱乐</a> / <a
-                                href="#">KTV</a></span><span
-                                class="arrow"></span></li>
-                        <li><span class="icon icon8"></span><span class="text"><a href="#">生活服务</a></span><span
-                                class="arrow"></span></li>
-                        <li><span class="icon icon9"></span><span class="text"><a href="#">丽人</a> / <a
-                                href="#">美发</a> / <a href="#">医学美容</a></span><span class="arrow"></span></li>
-                        <li><span class="icon icon10"></span><span class="text"><a href="#">结婚</a> / <a
-                                href="#">婚纱摄影</a> / <a href="#">婚宴</a></span><span class="arrow"></span></li>
-                        <li><span class="icon icon11"></span><span class="text"><a href="#">亲子</a> / <a
-                                href="#">儿童乐园</a> / <a href="#">幼教</a></span><span class="arrow"></span></li>
-                        <li><span class="icon icon12"></span><span class="text"><a href="#">运动健身</a> / <a
-                                href="#">健身中心</a></span><span
-                                class="arrow"></span></li>
-                        <li><span class="icon icon13"></span><span class="text"><a href="#">家装</a> / <a
-                                href="#">建材</a> / <a href="#">家具</a></span><span class="arrow"></span></li>
-                        <li><span class="icon icon14"></span><span class="text"><a href="#">学习培训</a> / <a
-                                href="#">音乐培训</a></span><span
-                                class="arrow"></span></li>
-                        <li><span class="icon icon15"></span><span class="text"><a href="#">医疗健康</a> / <a
-                                href="#">宠物</a> / <a
-                                href="#">爱车</a></span><span class="arrow"></span></li>
-                        <li><span class="icon icon16"></span><span class="text"><a href="#">酒吧</a> / <a
-                                href="#">密室逃脱</a></span><span class="arrow"></span></li>
-                    </ul>
-                </div>
+        <div class="login-register col-md-2" style="height: auto" id="screen">
+            <img class="avatar" src="{% static 'img/icon/avatar.jpg' %}" alt=""><br>
+            <div v-if="!isLoggedIn">
+                <span class="say-hello">Hi! 你好</span><br>
+                <a class="register" href="/register">注册</a><br>
+                <a class="login" href="/login">立即登录</a>
             </div>
-            <div class="middle-col">
-                <div class="pic pic1">
-                    <a href="#"></a>
-                </div>
-                <div class="pic pic2">
-                    <a href="#"></a>
-                </div>
-                <div class="pic pic3">
-                    <a href="#"></a>
-                </div>
-                <div class="pic pic4">
-                    <a href="#"></a>
-                </div>
-                <div class="pic pic5">
-                    <a href="#"></a>
-                </div>
+            <div v-else>
+                <span class="say-hello">Hi![[ username ]]</span><br>
+                <button class="logout" @click='logout'>退出</button>
             </div>
-            <div class="right-col">
-                <div class="login-register">
-                    <img class="avatar" src="{% static 'img/icon/avatar.jpg' %}" alt=""><br>
-                    <div v-if="!isLoggedIn">
-                        <span class="say-hello">Hi! 你好</span><br>
-                        <a class="register" href="/register">注册</a><br>
-                        <a class="login" href="/login">立即登录</a>
-                    </div>
-                    <div v-else>
-                        <span class="say-hello">Hi![[ username ]]</span><br>
-                        <button class="logout" @click='logout'>退出</button>
-                    </div>
 
-                </div>
-                <div class="qr-code">
-                    <img class="download-qr" src="{% static 'img/icon/download-qr.png' %}" alt=""><br>
-                    <span class="text1">乐购APP手机版</span><br>
-                    <span class="text2">1元起</span>
-                    <span class="text3">吃喝玩乐</span>
-                </div>
-            </div>
         </div>
-    </div>
-    <!-- 有格调 -->
-    <div class="quality-box">666</div>
-    <!-- 狠优惠 -->
-    <div class="discount-box">666</div>
-    <!-- 猫眼电影 -->
-    <div class="maoyan-box">666</div>
-    <!-- 推荐民宿· -->
-    <div class="homestay-box">666</div>
-    <!-- 猜你喜欢 -->
-    <div class="recommend-box">666</div>
-    <!-- 乐购导航 -->
-    <div class="mt-nav">666</div>
-    <!-- 底部 -->
-    <div class="bottom-box">666</div>
 
-    <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
-    <script type='text/javascript' src="{% static 'js/index.js' %}"></script>
+
+    </div>
 </div>
+<script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+<script type='text/javascript' src="{% static 'js/index.js' %}"></script>
+{#<script type='text/javascript' src="{% static 'js/search.js' %}"></script>#}
 </body>
+
 </html>

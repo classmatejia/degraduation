@@ -1,10 +1,11 @@
 import json
-from django.http import JsonResponse, HttpResponse
+
+from django.http import JsonResponse
 from django.shortcuts import render, redirect
 from django.views import View
 from django_redis import get_redis_connection
-from apps.merchant.models import Merchant
-from apps.shop.models import Shop, Goods
+
+from apps.shop.models import *
 
 
 def check_login(func):
@@ -45,6 +46,21 @@ class RegisterView(View):
             return JsonResponse({'register': "error", 'captcha': 0})
 
 
+class MerchantModalOpen(View):
+
+    def get(self, request):
+        email = request.session.get('merchant', None)
+        try:
+            merchant = Merchant.objects.get(email=email)  # 通过邮箱查到商家
+            mer_shops = merchant.merchant.all()  # 拿到对应店铺
+        except Merchant.DoesNotExist:
+            mer_shops = None
+        if mer_shops:
+            return JsonResponse({'code': 200})
+        else:
+            return JsonResponse({'code': 400})
+
+
 class MerchantEmailCounter(View):
     """验证用户名是否重复"""
 
@@ -68,9 +84,8 @@ class MeLoginView(View):
         except Merchant.DoesNotExist:
             return JsonResponse({'code': 400, 'errmsg': '用户名或者密码错误'})
         response = JsonResponse({'code': 200, 'errmsg': 'ok'})
-        response.set_cookie('merchant', username.encode("utf-8"), max_age=3600 * 24 * 15)
+
         request.session['merchant'] = me.email
-        response.set_cookie('mesessionid', hash(password), max_age=3600 * 24 * 15)
         return response
 
 
@@ -127,18 +142,29 @@ class MeIndexView(View):
         if mer_shops:
             mer_shop = mer_shops[0]
             store = {'name': mer_shop.shop_name, 'address': mer_shop.adders, 'rating': mer_shop.mark}
+            queryset = mer_shop.goods.all()
         else:
             store = {'name': '你还没有店铺', 'address': '', 'rating': ''}
-        queryset = mer_shop.goods.all()
+            queryset = None
 
-        goods_list = [
-            {"item_id": item.id, "name": item.goods_name, "description": item.desc[0:30] + '...',
-             "price": item.price} for
-            item in queryset]
+        print(queryset)
+        """商品列表"""
+        if queryset:
+            goods_list = [
+                {"item_id": item.id, "name": item.goods_name, "description": item.desc[0:30] + '...',
+                 "price": item.price} for
+                item in queryset]
+        else:
+            goods_list = []
 
+        top_level_types = ShopsType.objects.filter(parent__isnull=True)
+        typebox = [{"category": f"{i.main_type}", 'subcategories': [item.main_type for item in i.subs.all()]} for i in
+                   top_level_types]
         context = {
             'store': store,
+
             'products': goods_list,
+            'typeboxes': typebox
         }
         return render(request, 'mcindex.html', context=context)
 
@@ -184,23 +210,37 @@ class SetupshopView(View):
     def post(self, request):
         """开店注册"""
         json_dict = json.loads(request.body.decode('utf-8'))
-        print(json_dict)
         store_name = json_dict.get('shop_name')
         store_address = json_dict.get('address')
         contact_number = json_dict.get('phone')
+        shop_type = json_dict.get('shop_type')
         email = request.session.get('merchant')
 
         merchant = Merchant.objects.get(email=email)
+        sub_type = ShopsType.objects.get(main_type=shop_type)
+
         try:
             if not merchant.merchant.all():  # 检查有没有店铺，只准有一家店目前
                 Shop.objects.create(
                     shop_name=store_name,
                     adders=store_address,
                     phone=contact_number,
-                    merchant=merchant  # 关联商家用户对象
+                    merchant=merchant,  # 关联商家用户对象
+                    types=sub_type
                 )
                 return JsonResponse({'code': 200})
             else:
                 return JsonResponse({'code': 202})
         except Exception:
             return JsonResponse({'code': 400})
+
+
+class DescView(View):
+    @check_login
+    def get(self, request):
+        email = request.session.get('merchant')
+        merchant = Merchant.objects.get(email=email)
+        shop = merchant.merchant.all()[0]
+        comments = [{"user": i.fk_user, "content": i.content} for i in shop.comments.all()]
+        context ={"comments": comments, "shop": shop.shop_name}
+        return render(request, 'desc.html', context=context)

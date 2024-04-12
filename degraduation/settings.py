@@ -28,6 +28,7 @@ ALLOWED_HOSTS = ["*"]
 
 # 注册应用
 INSTALLED_APPS = [
+    "simpleui",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -39,6 +40,7 @@ INSTALLED_APPS = [
     "apps.verifications",
     "apps.merchant",
     'apps.shop'
+
 ]
 # 中间件
 MIDDLEWARE = [

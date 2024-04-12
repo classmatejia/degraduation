@@ -1,11 +1,14 @@
+import json
+import re
+
 from django.contrib.auth import login, authenticate, logout
-from django.http import HttpResponse, JsonResponse
+from django.http import JsonResponse
 from django.shortcuts import render
 from django.views import View
-import json
 from django_redis import get_redis_connection
 
-from apps.consumer.models import Consumer
+from apps.shop.models import *
+from .models import *
 
 
 # Create your views here.
@@ -89,3 +92,151 @@ class IndexView(View):
 
     def get(self, request):
         return render(request, 'index.html')
+
+
+class CategoryView(View):
+
+    def get(self, request, num):
+        b_type = ShopsType.objects.get(id=num)
+        shops = b_type.type.all()
+        context = {
+            "shops": [
+                {"id": f"{i.id}", 'name': f"{i.shop_name}", "address": f"{i.adders}", "mark": f"{i.mark}"} for i in
+                shops
+            ]
+        }
+        return render(request, 'category.html', context=context)
+
+
+class ShopView(View):
+
+    def get(self, request, num):
+        shop = Shop.objects.get(id=num)
+        goods_list = shop.goods.all()
+        is_commented = False
+        if request.user.is_authenticated:
+            comment = shop.comments.filter(fk_user=request.user)
+            if comment:  #
+                is_commented = True
+            else:
+                is_commented = False
+            Browser.objects.create(
+                user=request.user,
+                shop=shop
+            )
+        comments = shop.comments.all()
+        context = {
+            'business': {'name': shop.shop_name, 'address': shop.adders, 'phone': shop.phone, "mark": shop.mark},
+            'products': [{"id": i.id, 'name': i.goods_name, 'price': i.price} for i in goods_list],
+            'condition': is_commented,
+            'comments': [{'user': i.fk_user, 'text': i.content} for i in comments]
+        }
+        return render(request, 'shop.html', context=context)
+
+    def post(self, request, num):
+        if request.user.is_authenticated:
+            json_dict = json.loads(request.body.decode('utf-8'))
+            id_list = []
+            for i in json_dict:
+                id_list.append(int(i['id']))
+            goods_instances = Goods.objects.filter(pk__in=id_list)
+            shop = Shop.objects.get(id=num)
+            Orders.objects.create(
+                user=request.user,
+                is_comment=False,
+                shop=shop,
+            ).goods.add(*goods_instances)
+
+            return JsonResponse({"code": 200})
+        else:
+            # 用户未登录
+            return JsonResponse({"code": 400})
+
+
+class CommentView(View):
+
+    def post(self, request):
+        if request.user.is_authenticated:
+            json_dict = json.loads(request.body.decode('utf-8'))
+            comment = json_dict.get('comment')
+            num = json_dict.get('path')
+            mark = int(json_dict.get('mark'))
+            print(mark)
+            match = re.search(r'\d+$', num)
+            if match:
+                # 返回匹配到的数字
+                id = match.group()
+            else:
+                # 如果没有匹配到数字，返回 None 或者您想要的默认值
+                return JsonResponse({"code": 400})
+            shop = Shop.objects.get(id=id)
+            shop.mark = round((int(shop.mark) + mark) / 2, 1)
+            shop.save()
+            Comment.objects.create(
+                content=comment,
+                fk_user=request.user,
+                fk_shop=shop,
+                mark=mark
+            )
+            return JsonResponse({"code": 200})
+        else:
+            return JsonResponse({"code": 400})
+
+
+class CartView(View):
+    def post(self, request, ):
+        json_dict = json.loads(request.body.decode('utf-8'))
+        id = int(json_dict['id'])
+        goods = Goods.objects.get(id=id)
+        return JsonResponse({"name": goods.goods_name})
+
+
+class SearchView(View):
+
+    def get(self, request):
+        query = request.GET.get('query', '')
+        print(query)
+        shops = Shop.objects.filter(shop_name__icontains=query)
+        context = {
+            "shops": [
+                {"id": f"{i.id}", 'name': f"{i.shop_name}", "address": f"{i.adders}", "mark": f"{i.mark}"} for i in
+                shops
+            ]
+        }
+        return render(request, 'category.html', context=context)
+
+
+class PersonalView(View):
+
+    def get(self, request):
+        if request.user.is_authenticated:
+            user = request.user
+            orders = user.orders.all()
+            comments = user.comments.all()
+            browsing = user.browser.all().order_by('-date')
+            context = {
+                'user': {'username': user.username, 'email': user.email, 'date': user.date_joined},
+                'orders': [{'date': i.date, 'shop': i.shop.shop_name,
+                            'goods': [{'name': j.goods_name, 'price': j.price} for j in i.goods.all()]} for i in
+                           orders],
+                'comments': [
+                    {'id': i.id, 'shop': i.fk_shop.shop_name, 'content': i.content, 'mark': i.mark, 'date': i.date}
+                    for i in
+                    comments],
+                'browsing': [{'date': i.date, 'shop': i.shop.shop_name} for i in browsing]
+            }
+            return render(request, 'personal.html', context=context)
+        else:
+            return render(request, '404.html', )
+
+    def delete(self, request):
+        if request.user.is_authenticated:
+            json_dict = json.loads(request.body.decode('utf-8'))
+            id = json_dict.get('id')
+            try:
+                Comment.objects.get(id=id).delete()
+                return JsonResponse({'code': 200})
+            except Comment.DoesNotExist:
+                return JsonResponse({'code': 400})
+        else:
+            return JsonResponse({'code': 400})

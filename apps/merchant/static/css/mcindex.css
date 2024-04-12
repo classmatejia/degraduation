@@ -85,7 +85,7 @@ body {
 }
 
 .btn:hover {
-    background-color: #0056b3;
+    background-color: #12b300;
 }
 
 #open-shop-btn {
@@ -121,12 +121,13 @@ body {
 
 .action-buttons {
     display: flex;
+    color: #6fb746;
 }
 
 .action-button {
     padding: 5px 10px;
     margin-left: 5px;
-    background-color: #007bff;
+    background-color: #2da233;
     color: #fff;
     border: none;
     border-radius: 3px;
@@ -134,5 +135,5 @@ body {
 }
 
 .action-button:hover {
-    background-color: #0056b3;
+    background-color: #21b300;
 }

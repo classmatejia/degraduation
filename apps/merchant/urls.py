@@ -10,6 +10,7 @@ urlpatterns = [
     path('setupshop', SetupshopView.as_view()),
     path('logout', MeLogoutView.as_view()),
     path('alterinfo', AlterInfoView.as_view()),
-
+    path('isopen', MerchantModalOpen.as_view()),
+    path("desc", DescView.as_view())
 
 ]
