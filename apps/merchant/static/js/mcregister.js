@@ -87,8 +87,8 @@ new Vue({
                 .then(response => response.json())
                 .then(data => {
                     // 处理返回的数据
-                    console.log(data);
-                    this.captchaMatch = !(data.register === "error" && data.captcha === 0);
+                   window.location.href = 'http://127.0.0.1:8000/merchant/login';
+
                 })
                 .catch(error => {
                     console.error('Error:', error); // 如果请求失败，在控制台输出错误信息

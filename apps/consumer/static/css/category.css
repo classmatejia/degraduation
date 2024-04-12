@@ -1,0 +1,41 @@
+/* 商店展示部分样式 */
+#demo {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center; /* 水平居中 */
+}
+
+.shop {
+    width: 100%; /* 设置商店卡片宽度为100%，占满整行 */
+    margin-bottom: 10px; /* 设置商店卡片之间的间距 */
+    border: 1px solid #ccc; /* 边框 */
+    border-radius: 5px; /* 边框圆角 */
+    padding: 10px; /* 内边距 */
+    text-align: left; /* 文字居中 */
+    display: flex; /* 使用弹性布局 */
+    align-items: center; /* 垂直居中 */
+}
+
+
+.shop-info {
+    margin-top: 10px; /* 设置商店信息与商店名称之间的间距 */
+     flex: 1; /* 占据剩余空间 */
+}
+
+/* 如果需要设置商店卡片的最大宽度，可以添加下面这段代码 */
+@media (max-width: 992px) {
+    .shop {
+        width: calc(50% - 20px); /* 在小屏幕上最多显示两列 */
+    }
+}
+
+@media (max-width: 768px) {
+    .shop {
+        width: calc(100% - 20px); /* 在更小的屏幕上只显示一列 */
+    }
+}
+.shop img {
+    width: 80px; /* 图片宽度 */
+    height: 80px; /* 图片高度 */
+    margin-right: 10px; /* 图片与商店信息之间的间距 */
+}

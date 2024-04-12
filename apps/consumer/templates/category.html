@@ -1,0 +1,76 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LocalHub</title>
+    <link rel="stylesheet" href="{% static 'css/index.css' %}">
+    <link rel="stylesheet" href="{% static 'css/category.css' %}">
+    <!-- 新 Bootstrap5 核心 CSS 文件 -->
+    <link rel="stylesheet" href="https://cdn.staticfile.net/twitter-bootstrap/5.1.1/css/bootstrap.min.css">
+
+    <!--  popper.min.js 用于弹窗、提示、下拉菜单 -->
+    <script src="https://cdn.staticfile.net/popper.js/2.9.3/umd/popper.min.js"></script>
+
+    <!-- 最新的 Bootstrap5 核心 JavaScript 文件 -->
+    <script src="https://cdn.staticfile.net/twitter-bootstrap/5.1.1/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+<!-- 最顶部导航栏 -->
+<nav class="navbar navbar-expand-sm bg-light justify-content-between" id="nav">
+    <a class="navbar-brand" href="#">LocalHub</a>
+    <div class="navbar-list">
+        <span v-if="!isLoggedIn">
+            <a href="/login" style="margin: 10px">登录</a>
+            <a href="/register" style="margin: 10px">注册</a>
+        </span>
+        <span v-else>[[username]]</span>
+        <a href="#" style="margin: 10px">个人中心</a>
+        <a href="#" style="margin: 10px">我的订单</a>
+        <a href="#" style="margin: 10px">最近浏览</a>
+
+    </div>
+</nav>
+
+<div class="container mt-3" id="screen">
+    <div class="row content-section">
+        <!-- 搜索框 -->
+        <div class="search-container">
+            <div class="logo-wrapper">
+                <img src="{% static 'img/icon/22.png' %}" alt="Logo">
+            </div>
+            <form class="search-form">
+                <input type="text" class="search-input form-control" placeholder="搜索" aria-label="Search">
+                <button class="search-btn btn btn-outline-primary" type="submit">搜索</button>
+            </form>
+        </div>
+
+        <div class="col-md-1">
+
+        </div>
+
+        <div id="demo" class="carousel slide col-md-8" data-bs-ride="carousel" style="height: 280px">
+            {% for shop in shops %}
+                <div class="shop">
+                <img src="{% static 'img/icon/avatar.jpg' %}" alt="">
+                    <div class="shop-info">
+
+                        <p class="shop-name"><a href="shop{{ shop.id }}">{{ shop.name }}</a></p>
+                        <p class="product-desc">{{ shop.address }}</p>
+                        <p class="product-mark">评分：{{ shop.mark }}</p>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+
+
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+<script type='text/javascript' src="{% static 'js/category.js' %}"></script>
+</body>
+
+</html>

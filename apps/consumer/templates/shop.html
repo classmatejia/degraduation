@@ -1,0 +1,145 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ business.name }}</title>
+    <link rel="stylesheet" href="{% static 'css/index.css' %}">
+    <link rel="stylesheet" href="https://cdn.staticfile.net/twitter-bootstrap/5.1.1/css/bootstrap.min.css">
+
+    <!--  popper.min.js 用于弹窗、提示、下拉菜单 -->
+    <script src="https://cdn.staticfile.net/popper.js/2.9.3/umd/popper.min.js"></script>
+
+    <!-- 最新的 Bootstrap5 核心 JavaScript 文件 -->
+    <script src="https://cdn.staticfile.net/twitter-bootstrap/5.1.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+<!-- 最顶部导航栏 -->
+<nav class="navbar navbar-expand-sm bg-light justify-content-between" id="nav">
+    <a class="navbar-brand" href="#">LocalHub</a>
+    <div class="navbar-list">
+        <span v-if="!isLoggedIn">
+            <a href="/login" style="margin: 10px">登录</a>
+            <a href="/register" style="margin: 10px">注册</a>
+        </span>
+        <span v-else>[[username]]</span>
+        <a href="#" style="margin: 10px">个人中心</a>
+        <a href="#" style="margin: 10px">我的订单</a>
+        <a href="#" style="margin: 10px">最近浏览</a>
+
+    </div>
+</nav>
+<div class="container mt-3" id="shopmsg">
+    <div class="row content-section">
+        <!-- 搜索框 -->
+        <div class="search-container">
+            <div class="logo-wrapper">
+                <img src="{% static 'img/icon/22.png' %}" alt="Logo">
+            </div>
+            <form class="search-form">
+                <input type="text" class="search-input form-control" placeholder="搜索" aria-label="Search">
+                <button class="search-btn btn btn-outline-primary" type="submit">搜索</button>
+            </form>
+        </div>
+
+        <div id="demo" class="carousel slide col-md-8" data-bs-ride="carousel">
+            <div style="height: 280px;box-shadow:2px 2px 3px 3px #6fb746;margin-bottom: 15px ">
+                <h1>{{ business.name }}</h1>
+                <h5>评分：{{ business.mark }}</h5>
+                <p>地址：{{ business.address }}</p>
+                <p>电话：{{ business.phone }}</p>
+            </div>
+            <div class="col-md-2"
+                 style="box-shadow:2px 2px 3px 3px #f1b109;width: 100%;float: left;padding-bottom:10px;height: auto ">
+                <h2>商品：</h2>
+                <ul>
+                    {% for product in products %}
+                        <li class=""
+                            style="width: 40%;float: left;box-shadow:3px 2px 3px 1px #cdcecc;margin: 5px;list-style-type: none;">
+                            <img src="{% static 'img/icon/maodu.jpg' %}" width="100px" style="float: left" alt="">
+                            <div style="border-radius: 10px;padding: 10px;margin-bottom: 10px;float: left">
+                                <b>{{ product.name }}</b>
+                                <br>
+                                价格: <span style="color: red">{{ product.price }}</span>
+                            </div>
+                            <button style="float: right;margin-top: 20px;background-color: rgba(245,245,95,0.89)"
+                                    @click="addCart" data-id="{{ product.id }}">
+                                <img src="{% static 'img/icon/plus.png' %}" width="40px" alt=""></button>
+                        </li>
+                    {% empty %}
+                        <li>暂无商品</li>
+                    {% endfor %}
+                </ul>
+            </div>
+
+        </div>
+        <div class="col-md-2" style="float: right;box-shadow:2px 2px 3px 3px #f13f09">
+            <h2>购物车</h2>
+            <div v-for="(item,index) in cartItems" :key="item.id" style="height: 50px;margin: 3px">
+                <span>[[ item.name ]]</span>x[[item.count]]
+                <button @click="removeFromCart(index)" style="float: right;background-color: white"><img
+                        src="{% static 'img/icon/jianhao.png' %}" width="20px"></button>
+            </div>
+            <button @click="placeAnOrder">下单</button>
+        </div>
+
+
+        <div style="box-shadow:2px 2px 3px 3px #b02bd5;margin-top:20px;margin-left: 14px;margin-bottom: 20px">
+
+            {% if condition %}
+                <!-- 如果条件为真时执行的内容 -->
+                <h2>评论过</h2>
+            {% else %}
+                <h2>未评论过此店</h2>
+            {% endif %}
+            <form @submit.prevent="getComment">
+                <div class="form-check">
+                    <input type="radio" class="form-check-input" id="radio1" name="optradio" value="1" v-model="mark" checked required>
+                    <label class="form-check-label" for="radio1">⭐</label>
+                </div>
+                <div class="form-check">
+                    <input type="radio" class="form-check-input" id="radio2" name="optradio" value="2" v-model="mark" required>
+                    <label class="form-check-label" for="radio2">⭐⭐</label>
+                </div>                <div class="form-check">
+                    <input type="radio" class="form-check-input" id="radio2" name="optradio" value="3" v-model="mark" required>
+                    <label class="form-check-label" for="radio2">⭐⭐⭐</label>
+                </div>                <div class="form-check">
+                    <input type="radio" class="form-check-input" id="radio2" name="optradio" value="4" v-model="mark" required>
+                    <label class="form-check-label" for="radio2">⭐⭐⭐⭐</label>
+                </div>
+                <div class="form-check">
+                    <input type="radio" class="form-check-input" id="radio2" name="optradio" value="5" v-model="mark" required>
+                    <label class="form-check-label" for="radio2">⭐⭐⭐⭐⭐</label>
+                </div>
+            </form>
+            <label>
+                <textarea id="comment" placeholder="请输入你的评论"
+                          style="width: 600%;height: 200px;padding: 3px"></textarea>
+            </label>
+            <div style="margin-bottom: 10px">
+                <button style="float: left" @click="getComment">post</button>
+            </div>
+            <br>
+
+        </div>
+        <h2 style=" ">用户评论：</h2>
+        {% for comment in comments %}
+            <div>
+                <strong>{{ comment.user }}</strong>
+                {{ comment.text }}
+            </div>
+        {% empty %}
+            <div>暂无评论</div>
+        {% endfor %}
+
+
+    </div>
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+<script src="{% static 'js/shop.js' %}"></script>
+</body>
+</html>
