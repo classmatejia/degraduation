@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 const search = new Vue({
     el: '#search-container',
     delimiters: ['[[', ']]'],
@@ -21,6 +22,17 @@ const search = new Vue({
                 .catch(error => {
                     console.error('搜索失败：', error);
                 });
+=======
+new Vue({
+    el: '#search-container',
+    delimiters: ['[[', ']]'],
+    data:{
+        search_string: ''
+    },
+    methods: {
+        search(){
+
+>>>>>>> origin/main
 
 
         }

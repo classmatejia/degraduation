@@ -27,6 +27,7 @@
             <a href="/register" style="margin: 10px">注册</a>
         </span>
         <span v-else>[[username]]</span>
+<<<<<<< HEAD
         <a href="/personal" style="margin: 8px">个人中心</a>
 
 
@@ -42,6 +43,24 @@
             </div>
             <form  class="search-form" action="http://127.0.0.1:8000/search" method="get">
                 <input type="text"  name="query" class="search-input form-control" placeholder="搜索" aria-label="Search">
+=======
+        <a href="#" style="margin: 8px">个人中心</a>
+        <a href="#" style="margin: 8px">我的订单</a>
+        <a href="#" style="margin: 8px">最近浏览</a>
+
+    </div>
+</nav>
+
+<div class="container mt-3" id="screen">
+    <div class="row content-section">
+        <!-- 搜索框 -->
+        <div class="search-container">
+            <div class="logo-wrapper">
+                <img src="{% static 'img/icon/22.png' %}" alt="Logo">
+            </div>
+            <form class="search-form">
+                <input type="text" class="search-input form-control" placeholder="搜索" aria-label="Search">
+>>>>>>> origin/main
                 <button class="search-btn btn btn-outline-primary" type="submit">搜索</button>
             </form>
         </div>
@@ -187,7 +206,11 @@
                 <span class="carousel-control-next-icon"></span>
             </button>
         </div>
+<<<<<<< HEAD
         <div class="login-register col-md-2" style="height: auto" id="screen">
+=======
+        <div class="login-register col-md-2" style="height: auto">
+>>>>>>> origin/main
             <img class="avatar" src="{% static 'img/icon/avatar.jpg' %}" alt=""><br>
             <div v-if="!isLoggedIn">
                 <span class="say-hello">Hi! 你好</span><br>
@@ -206,7 +229,10 @@
 </div>
 <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
 <script type='text/javascript' src="{% static 'js/index.js' %}"></script>
+<<<<<<< HEAD
 {#<script type='text/javascript' src="{% static 'js/search.js' %}"></script>#}
+=======
+>>>>>>> origin/main
 </body>
 
 </html>

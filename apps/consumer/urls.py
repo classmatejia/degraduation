@@ -12,9 +12,12 @@ urlpatterns = [
     path('shop<int:num>', ShopView.as_view()),
     path('cart', CartView.as_view()),
     path('comment', CommentView.as_view()),
+<<<<<<< HEAD
     path('search', SearchView.as_view()),
     path('personal', PersonalView.as_view())
 
+=======
+>>>>>>> origin/main
 
 
 ]

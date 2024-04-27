@@ -1,8 +1,19 @@
+<<<<<<< HEAD
 const demo =new Vue({
     el: '#demo',
     delimiters: ['[[', ']]'],
     data: {
         cartItems: [], //
+=======
+const a = new Vue({
+    el: '#shopmsg',
+    delimiters: ['[[', ']]'],
+    data: {
+        isLoggedIn: false, // 是否已登录
+        username: '', // 用户
+        cartItems: [], //
+        mark:'',
+>>>>>>> origin/main
     },
     methods: {
         addCart(e) {
@@ -31,6 +42,7 @@ const demo =new Vue({
                 }
             })
         },
+<<<<<<< HEAD
     }
 
 
@@ -47,6 +59,8 @@ const a = new Vue({
     },
     methods: {
 
+=======
+>>>>>>> origin/main
         removeFromCart(index) {
             if (this.cartItems[index].count > 1) {
                 this.cartItems[index].count--;
@@ -74,11 +88,42 @@ const a = new Vue({
                         alert('Error')
                     }
                 })
+<<<<<<< HEAD
             } else {
+=======
+            }else {
+>>>>>>> origin/main
                 alert('哒没！')
             }
 
         },
+<<<<<<< HEAD
+=======
+        getComment() {
+            const currentUrl = window.location.href;
+            const textarea = document.getElementById('comment');
+            const comment = textarea.value;
+            fetch('http://127.0.0.1:8000/comment', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({'comment':comment,'path':currentUrl,'mark':this.mark})
+            }).then(response => {
+                if (response.ok) {
+                    return response.json();
+                } else {
+                    throw new Error('Form submission failed');
+                }
+            }).then(data => {
+                if (data.code === 200) {
+                    window.location.reload();
+                } else {
+                    alert('评论失败')
+                }
+            })
+            console.log(comment);
+            textarea.value = '';
+        }
+>>>>>>> origin/main
 
 
     }
@@ -133,6 +178,7 @@ const nav = new Vue({
 
     }
 });
+<<<<<<< HEAD
 new Vue({
     el: '#comments',
     delimiters: ['[[', ']]'],
@@ -167,4 +213,6 @@ new Vue({
     }
 
 })
+=======
+>>>>>>> origin/main
 

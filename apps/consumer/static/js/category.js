@@ -45,6 +45,7 @@ const nav = new Vue({
 
     }
 });
+
 // screen = new Vue({
 //     el: "#screen",
 //     delimiters: ['[[', ']]'],
@@ -78,3 +79,38 @@ const nav = new Vue({
 //         }
 //     }
 // })
+
+screen = new Vue({
+    el: "#screen",
+    delimiters: ['[[', ']]'],
+    data: {
+        isLoggedIn: nav.isLoggedIn,
+        username: nav.username // 用户
+    },
+    methods: {
+        logout() {
+            fetch('logout', {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+            }).then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            }).then(data => {
+                    if (data.code === 200) {
+                        // 推出成功，重定向到 index 页面
+                        window.location.href = 'http://127.0.0.1:8000/index';
+                    } else {
+                        // 登录失败，弹窗提示账号或密码错误
+                        alert("错误");
+                    }
+                }
+            )
+
+        }
+    }
+})
+
