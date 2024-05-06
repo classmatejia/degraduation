@@ -120,19 +120,18 @@ class ShopView(View):
                 is_commented = True
             else:
                 is_commented = False
-<<<<<<< HEAD
+
             Browser.objects.create(
                 user=request.user,
                 shop=shop
             )
         comments = shop.comments.all()
-        context = {
-            'business': {'name': shop.shop_name, 'address': shop.adders, 'phone': shop.phone, "mark": shop.mark},
-=======
+
+
         comments = shop.comments.all()
         context = {
             'business': {'name': shop.shop_name, 'address': shop.adders, 'phone': shop.phone,"mark":shop.mark},
->>>>>>> origin/main
+
             'products': [{"id": i.id, 'name': i.goods_name, 'price': i.price} for i in goods_list],
             'condition': is_commented,
             'comments': [{'user': i.fk_user, 'text': i.content} for i in comments]
@@ -147,10 +146,9 @@ class ShopView(View):
                 id_list.append(int(i['id']))
             goods_instances = Goods.objects.filter(pk__in=id_list)
             shop = Shop.objects.get(id=num)
-<<<<<<< HEAD
-=======
 
->>>>>>> origin/main
+
+
             Orders.objects.create(
                 user=request.user,
                 is_comment=False,
@@ -199,7 +197,7 @@ class CartView(View):
         id = int(json_dict['id'])
         goods = Goods.objects.get(id=id)
         return JsonResponse({"name": goods.goods_name})
-<<<<<<< HEAD
+
 
 
 class SearchView(View):
@@ -251,5 +249,4 @@ class PersonalView(View):
                 return JsonResponse({'code': 400})
         else:
             return JsonResponse({'code': 400})
-=======
->>>>>>> origin/main
+
